@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MainCarousel from '../../components/Carousel/MainCarousel';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import ModelModal from '../../components/ModelModal';
 
 const HomeContainer = styled.div`
   max-width: 1200px;
@@ -99,10 +100,120 @@ const FeatureCard = styled.div`
   }
 `;
 
+const CatalogPreview = styled.section`
+  margin: 4rem 0;
+`;
+
+const PreviewHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
+const PreviewTitle = styled.h2`
+  font-size: 1.8rem;
+  color: #333;
+`;
+
+const ViewAllButton = styled.a`
+  color: #007bff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ModelGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+`;
+
+const ModelCard = styled.div`
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+`;
+
+const ModelImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background: #f8f9fa;
+  padding: 1rem;
+`;
+
+const ModelInfo = styled.div`
+  padding: 1rem;
+
+  h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #666;
+    font-size: 0.9rem;
+  }
+`;
+
+const previewModels = [
+  {
+    id: 1,
+    name: "Tube Fitting",
+    category: "fittings",
+    type: "tube",
+    series: "standard",
+    description: "High-pressure tube fitting",
+    thumbnail: "https://via.placeholder.com/400x300?text=Tube+Fitting"
+  },
+  {
+    id: 2,
+    name: "Ball Valve",
+    category: "valves",
+    type: "ball",
+    series: "premium",
+    description: "Standard ball valve",
+    thumbnail: "https://via.placeholder.com/400x300?text=Ball+Valve"
+  },
+  {
+    id: 3,
+    name: "Check Valve",
+    category: "valves",
+    type: "check",
+    series: "industrial",
+    description: "Industrial check valve",
+    thumbnail: "https://via.placeholder.com/400x300?text=Check+Valve"
+  },
+  {
+    id: 4,
+    name: "Gate Valve",
+    category: "valves",
+    type: "gate",
+    series: "premium",
+    description: "Premium gate valve",
+    thumbnail: "https://via.placeholder.com/400x300?text=Gate+Valve"
+  }
+];
+
 const Home = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [selectedModel, setSelectedModel] = useState(null);
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -132,6 +243,31 @@ const Home = () => {
 
       <MainCarousel />
 
+      <CatalogPreview>
+        <PreviewHeader>
+          <PreviewTitle>Popular Models</PreviewTitle>
+          <ViewAllButton href="/catalog">
+            View All Models
+            <span>&rarr;</span>
+          </ViewAllButton>
+        </PreviewHeader>
+
+        <ModelGrid>
+          {previewModels.map(model => (
+            <ModelCard 
+              key={model.id}
+              onClick={() => setSelectedModel(model)}
+            >
+              <ModelImage src={model.thumbnail} alt={model.name} />
+              <ModelInfo>
+                <h3>{model.name}</h3>
+                <p>{model.description}</p>
+              </ModelInfo>
+            </ModelCard>
+          ))}
+        </ModelGrid>
+      </CatalogPreview>
+
       <FeaturesGrid>
         <FeatureCard>
           <h3>Free Downloads</h3>
@@ -146,6 +282,12 @@ const Home = () => {
           <p>Accurate and detailed models</p>
         </FeatureCard>
       </FeaturesGrid>
+      {selectedModel && (
+        <ModelModal 
+          model={selectedModel} 
+          onClose={() => setSelectedModel(null)}
+        />
+      )}
     </HomeContainer>
   );
 };
