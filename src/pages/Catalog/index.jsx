@@ -1,46 +1,129 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import ModelModal from '../../components/ModelModal';
+import {
+  setCurrentView,
+  setSelectedProductType,
+  setSelectedItemType,
+  setSelectedSeries,
+  setSelectedModel
+} from '../../store/catalogSlice';
+import ProductTypeList from './components/ProductTypeList';
+import ItemTypeGrid from './components/ItemTypeGrid';
+import SeriesList from './components/SeriesList';
+import ModelsList from './components/ModelsList';
+import ModelCard from './components/ModelCard';
 
-const ModelCard = styled.div`
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-  cursor: pointer;
+const CatalogContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+const CatalogLayout = styled.div`
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+`;
+
+const Breadcrumbs = styled.div`
+  padding: 1rem 0;
+  color: #666;
+
+  span {
+    cursor: pointer;
+    &:hover {
+      color: #333;
+    }
   }
 `;
 
 const Catalog = () => {
-  const [selectedModel, setSelectedModel] = useState(null);
+  const dispatch = useDispatch();
+  const {
+    currentView,
+    selectedProductType,
+    selectedItemType,
+    selectedSeries,
+    selectedModel
+  } = useSelector(state => state.catalog);
+
+  const handleProductTypeSelect = (productType) => {
+    dispatch(setSelectedProductType(productType));
+    dispatch(setCurrentView('itemType'));
+  };
+
+  const handleItemTypeSelect = (itemType) => {
+    dispatch(setSelectedItemType(itemType));
+    dispatch(setCurrentView('series'));
+  };
+
+  const handleSeriesSelect = (series) => {
+    dispatch(setSelectedSeries(series));
+    dispatch(setCurrentView('models'));
+  };
+
+  const handleModelSelect = (model) => {
+    dispatch(setSelectedModel(model));
+  };
+
+  const renderBreadcrumbs = () => {
+    const crumbs = [selectedProductType];
+    if (selectedItemType) crumbs.push(selectedItemType);
+    if (selectedSeries) crumbs.push(selectedSeries);
+
+    return (
+      <Breadcrumbs>
+        {crumbs.map((crumb, index) => (
+          <span key={index}>
+            {index > 0 && ' > '}
+            {crumb}
+          </span>
+        ))}
+      </Breadcrumbs>
+    );
+  };
 
   return (
     <CatalogContainer>
-      <Grid>
-        {filteredModels.map(model => (
-          <ModelCard 
-            key={model.id}
-            onClick={() => setSelectedModel(model)}
-          >
-            <ModelImage src={model.thumbnail} alt={model.name} />
-            <ModelInfo>
-              <h3>{model.name}</h3>
-              <p>{model.description}</p>
-            </ModelInfo>
-          </ModelCard>
-        ))}
-      </Grid>
+      {renderBreadcrumbs()}
+      
+      <CatalogLayout>
+        <ProductTypeList
+          selected={selectedProductType}
+          onSelect={handleProductTypeSelect}
+        />
+
+        <div>
+          {currentView === 'itemType' && (
+            <ItemTypeGrid
+              productType={selectedProductType}
+              onSelect={handleItemTypeSelect}
+            />
+          )}
+
+          {currentView === 'series' && (
+            <SeriesList
+              productType={selectedProductType}
+              itemType={selectedItemType}
+              onSelect={handleSeriesSelect}
+            />
+          )}
+
+          {currentView === 'models' && (
+            <ModelsList
+              productType={selectedProductType}
+              itemType={selectedItemType}
+              series={selectedSeries}
+              onSelect={handleModelSelect}
+            />
+          )}
+        </div>
+      </CatalogLayout>
 
       {selectedModel && (
-        <ModelModal 
-          model={selectedModel} 
-          onClose={() => setSelectedModel(null)}
+        <ModelCard
+          model={selectedModel}
+          onClose={() => dispatch(setSelectedModel(null))}
         />
       )}
     </CatalogContainer>

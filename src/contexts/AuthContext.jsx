@@ -1,44 +1,47 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    return { user: null, loading: false };
+  }
+  return context;
+};
+
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Проверка токена при загрузке
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Здесь можно добавить валидацию токена
-      setIsAuthenticated(true);
-    }
+    const checkAuth = async () => {
+      try {
+        // Здесь будет реальная проверка аутентификации
+        setLoading(false);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        setUser(null);
+        setLoading(false);
+      }
+    };
+    
+    checkAuth();
   }, []);
 
-  const login = async (credentials) => {
-    try {
-      // Здесь будет запрос к API для авторизации
-      const response = await api.login(credentials);
-      localStorage.setItem('token', response.token);
-      setIsAuthenticated(true);
-      setUser(response.user);
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
-    }
+  const value = {
+    user,
+    setUser,
+    loading
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-    setUser(null);
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => useContext(AuthContext); 
+}; 

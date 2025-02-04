@@ -1,95 +1,59 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../services/api';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchCatalogItems = createAsyncThunk(
-  'catalog/fetchItems',
-  async ({ type, category, series, page = 1 }) => {
-    const response = await api.getCatalog({ type, category, series, page });
-    return response.data;
-  }
-);
+const initialState = {
+  currentView: 'productType',
+  selectedProductType: null,
+  selectedItemType: null,
+  selectedSeries: null,
+  selectedModel: null,
+  itemTypes: [],
+  loading: false,
+  error: null
+};
 
 const catalogSlice = createSlice({
   name: 'catalog',
-  initialState: {
-    items: [],
-    loading: false,
-    error: null,
-    currentType: null,
-    currentCategory: null,
-    currentSeries: null,
-    pagination: {
-      currentPage: 1,
-      totalPages: 1,
-      totalItems: 0,
-    },
-    breadcrumbs: [],
-  },
+  initialState,
   reducers: {
-    setCurrentType: (state, action) => {
-      state.currentType = action.payload;
-      state.currentCategory = null;
-      state.currentSeries = null;
-      state.pagination.currentPage = 1;
+    setCurrentView: (state, action) => {
+      state.currentView = action.payload;
     },
-    setCurrentCategory: (state, action) => {
-      state.currentCategory = action.payload;
-      state.currentSeries = null;
-      state.pagination.currentPage = 1;
+    setSelectedProductType: (state, action) => {
+      state.selectedProductType = action.payload;
+      state.selectedItemType = null;
+      state.selectedSeries = null;
     },
-    setCurrentSeries: (state, action) => {
-      state.currentSeries = action.payload;
-      state.pagination.currentPage = 1;
+    setSelectedItemType: (state, action) => {
+      state.selectedItemType = action.payload;
+      state.selectedSeries = null;
     },
-    updateBreadcrumbs: (state) => {
-      state.breadcrumbs = [];
-      if (state.currentType) {
-        state.breadcrumbs.push({
-          name: state.currentType,
-          path: `/catalog/${state.currentType}`,
-        });
-      }
-      if (state.currentCategory) {
-        state.breadcrumbs.push({
-          name: state.currentCategory,
-          path: `/catalog/${state.currentType}/${state.currentCategory}`,
-        });
-      }
-      if (state.currentSeries) {
-        state.breadcrumbs.push({
-          name: state.currentSeries,
-          path: `/catalog/${state.currentType}/${state.currentCategory}/${state.currentSeries}`,
-        });
-      }
+    setSelectedSeries: (state, action) => {
+      state.selectedSeries = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCatalogItems.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchCatalogItems.fulfilled, (state, action) => {
-        state.loading = false;
-        state.items = action.payload.items;
-        state.pagination = {
-          currentPage: action.payload.currentPage,
-          totalPages: action.payload.totalPages,
-          totalItems: action.payload.totalItems,
-        };
-      })
-      .addCase(fetchCatalogItems.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
-  },
+    setSelectedModel: (state, action) => {
+      state.selectedModel = action.payload;
+    },
+    setItemTypes: (state, action) => {
+      state.itemTypes = action.payload;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    }
+  }
 });
 
-export const { 
-  setCurrentType, 
-  setCurrentCategory, 
-  setCurrentSeries, 
-  updateBreadcrumbs 
+export const {
+  setCurrentView,
+  setSelectedProductType,
+  setSelectedItemType,
+  setSelectedSeries,
+  setSelectedModel,
+  setItemTypes,
+  setLoading,
+  setError
 } = catalogSlice.actions;
 
 export default catalogSlice.reducer; 
