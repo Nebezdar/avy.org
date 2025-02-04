@@ -17,13 +17,13 @@ const Carousel = () => {
   const slides = [
     {
       title: "Fittings",
-      text: "Hy-Lok Fittings have been designed with great care...",
+      text: "Hy-Lok Fittings have been designed with great care to meet the specifications required for a wide range of applications in various industries and satisfied production standards.",
       model: randomModels.fitting,
       type: "fittings"
     },
     {
       title: "Valves",
-      text: "Hy-Lok Instrument Valves & Manifolds...",
+      text: "Hy-Lok Instrument Valves & Manifolds and Double Block Bleed & Piping Ball Valves have been highly recognized by customers through the safety, reliability and durability to meet the severe installation condition such as offshore and power plant.",
       model: randomModels.valve,
       type: "valves"
     }

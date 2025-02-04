@@ -48,13 +48,13 @@ const ModelInfo = styled.div`
 const mockModels = [
   {
     id: 1,
-    name: "Tube Fitting",
+    name: "Fittings",
     description: "High-pressure tube fitting",
     thumbnail: "https://via.placeholder.com/400x300?text=Tube+Fitting"
   },
   {
     id: 2,
-    name: "Ball Valve",
+    name: "Valves",
     description: "Standard ball valve",
     thumbnail: "https://via.placeholder.com/400x300?text=Ball+Valve"
   },

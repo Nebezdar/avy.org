@@ -1,110 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const CatalogContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-`;
+// ... предыдущие styled-components остаются без изменений ...
 
-const Header = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-`;
-
-const SearchBar = styled.input`
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-  }
-`;
-
-const FiltersContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-`;
-
-const Select = styled.select`
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: white;
-  min-width: 150px;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-`;
-
-const ModelCard = styled.div`
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-`;
-
-const ModelImage = styled.img`
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  background: #f8f9fa;
-  padding: 1rem;
-`;
-
-const ModelInfo = styled.div`
-  padding: 1rem;
-
-  h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: #333;
-  }
-
-  p {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-`;
-
-const DownloadButton = styled.button`
-  width: 100%;
-  padding: 0.8rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-
-  &:hover {
-    background: #0056b3;
-  }
-`;
-
-// Моковые данные
+// Расширим моковые данные для лучшего тестирования
 const mockModels = [
   {
     id: 1,
@@ -124,18 +23,87 @@ const mockModels = [
     description: "Standard ball valve",
     thumbnail: "https://via.placeholder.com/400x300?text=Ball+Valve"
   },
-  // Добавьте больше моделей...
+  {
+    id: 3,
+    name: "Check Valve DN15",
+    category: "valves",
+    type: "check",
+    series: "industrial",
+    description: "Industrial check valve",
+    thumbnail: "https://via.placeholder.com/400x300?text=Check+Valve"
+  },
+  {
+    id: 4,
+    name: "Gate Valve",
+    category: "valves",
+    type: "gate",
+    series: "premium",
+    description: "Premium gate valve",
+    thumbnail: "https://via.placeholder.com/400x300?text=Gate+Valve"
+  }
 ];
-
-const categories = ["All", "Fittings", "Valves", "Pipes"];
-const types = ["All", "Tube", "Ball", "Check", "Gate"];
-const series = ["All", "Standard", "Premium", "Industrial"];
 
 const Catalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedType, setSelectedType] = useState('All');
   const [selectedSeries, setSelectedSeries] = useState('All');
+  const [filteredModels, setFilteredModels] = useState(mockModels);
+
+  // Функция фильтрации моделей
+  const filterModels = () => {
+    let result = [...mockModels];
+
+    // Поиск по названию и описанию
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(model => 
+        model.name.toLowerCase().includes(query) ||
+        model.description.toLowerCase().includes(query)
+      );
+    }
+
+    // Фильтрация по категории
+    if (selectedCategory !== 'All') {
+      result = result.filter(model => 
+        model.category.toLowerCase() === selectedCategory.toLowerCase()
+      );
+    }
+
+    // Фильтрация по типу
+    if (selectedType !== 'All') {
+      result = result.filter(model => 
+        model.type.toLowerCase() === selectedType.toLowerCase()
+      );
+    }
+
+    // Фильтрация по серии
+    if (selectedSeries !== 'All') {
+      result = result.filter(model => 
+        model.series.toLowerCase() === selectedSeries.toLowerCase()
+      );
+    }
+
+    setFilteredModels(result);
+  };
+
+  // Применяем фильтры при изменении любого параметра
+  useEffect(() => {
+    filterModels();
+  }, [searchQuery, selectedCategory, selectedType, selectedSeries]);
+
+  // Получаем уникальные значения для фильтров из данных
+  const categories = ['All', ...new Set(mockModels.map(model => 
+    model.category.charAt(0).toUpperCase() + model.category.slice(1)
+  ))];
+  
+  const types = ['All', ...new Set(mockModels.map(model => 
+    model.type.charAt(0).toUpperCase() + model.type.slice(1)
+  ))];
+  
+  const series = ['All', ...new Set(mockModels.map(model => 
+    model.series.charAt(0).toUpperCase() + model.series.slice(1)
+  ))];
 
   return (
     <CatalogContainer>
@@ -175,18 +143,24 @@ const Catalog = () => {
         </FiltersContainer>
       </Header>
 
-      <Grid>
-        {mockModels.map(model => (
-          <ModelCard key={model.id}>
-            <ModelImage src={model.thumbnail} alt={model.name} />
-            <ModelInfo>
-              <h3>{model.name}</h3>
-              <p>{model.description}</p>
-              <DownloadButton>Download</DownloadButton>
-            </ModelInfo>
-          </ModelCard>
-        ))}
-      </Grid>
+      {filteredModels.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>No models found matching your criteria</p>
+        </div>
+      ) : (
+        <Grid>
+          {filteredModels.map(model => (
+            <ModelCard key={model.id}>
+              <ModelImage src={model.thumbnail} alt={model.name} />
+              <ModelInfo>
+                <h3>{model.name}</h3>
+                <p>{model.description}</p>
+                <DownloadButton>Download</DownloadButton>
+              </ModelInfo>
+            </ModelCard>
+          ))}
+        </Grid>
+      )}
     </CatalogContainer>
   );
 };
