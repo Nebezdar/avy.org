@@ -18,12 +18,44 @@ const Navigation = () => {
         maxWidth: '1200px', 
         margin: '0 auto', 
         display: 'flex', 
-        gap: '2rem' 
+        justifyContent: 'space-between', // Разделяем элементы по краям
+        alignItems: 'center'
       }}>
-        <a href="/" style={{ color: '#007bff', textDecoration: 'none', fontWeight: 'bold' }}>AVY.ORG</a>
-        <a href="/catalog" style={{ color: '#333', textDecoration: 'none' }}>Models</a>
-        <a href="/login" style={{ color: '#333', textDecoration: 'none' }}>Sign In</a>
-        <a href="/register" style={{ color: '#333', textDecoration: 'none' }}>Create Account</a>
+        {/* Левая часть навигации */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '2rem',
+          alignItems: 'center'
+        }}>
+          <a href="/" style={{ 
+            color: '#007bff', 
+            textDecoration: 'none', 
+            fontWeight: 'bold' 
+          }}>AVY.ORG</a>
+          <a href="/catalog" style={{ 
+            color: '#333', 
+            textDecoration: 'none' 
+          }}>Models</a>
+        </div>
+
+        {/* Правая часть навигации */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '2rem',
+          alignItems: 'center'
+        }}>
+          <a href="/login" style={{ 
+            color: '#333', 
+            textDecoration: 'none' 
+          }}>Sign In</a>
+          <a href="/register" style={{ 
+            color: '#333', 
+            textDecoration: 'none',
+            padding: '0.5rem 1rem',
+            border: '1px solid #333',
+            borderRadius: '4px'
+          }}>Create Account</a>
+        </div>
       </div>
     </nav>
   );
