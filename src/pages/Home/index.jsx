@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ModelModal from '../../components/ModelModal';
 
+
 const HomeContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -254,7 +255,7 @@ const Home = () => {
 
         <ModelGrid>
           {previewModels.map(model => (
-            <ModelCard 
+            <ModelCard
               key={model.id}
               onClick={() => setSelectedModel(model)}
             >
@@ -283,8 +284,8 @@ const Home = () => {
         </FeatureCard>
       </FeaturesGrid>
       {selectedModel && (
-        <ModelModal 
-          model={selectedModel} 
+        <ModelModal
+          model={selectedModel}
           onClose={() => setSelectedModel(null)}
         />
       )}
