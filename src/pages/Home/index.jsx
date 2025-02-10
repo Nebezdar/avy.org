@@ -175,21 +175,21 @@ const ModelInfo = styled.div`
 const previewModels = [
   {
     id: 1,
-    name: "Tube Fitting",
+    name: "Fitting",
     category: "fittings",
     type: "tube",
     series: "standard",
     description: "High-pressure tube fitting",
-    thumbnail: "https://via.placeholder.com/400x300?text=Tube+Fitting"
+    thumbnail: "https://fluid-line.ru/assets/snippets/image-manager/uploads//16221190491191622119049.jpg"
   },
   {
     id: 2,
-    name: "Ball Valve",
+    name: "Valve",
     category: "valves",
     type: "ball",
     series: "premium",
     description: "Standard ball valve",
-    thumbnail: "https://via.placeholder.com/400x300?text=Ball+Valve"
+    thumbnail: "https://fluid-line.ru/assets/images/105_serie-b.jpg"
   },
   {
     id: 3,
@@ -276,7 +276,7 @@ const Home = () => {
         </FeatureCard>
         <FeatureCard>
           <h3>Multiple Formats</h3>
-          <p>STEP, IGES, STL and other formats</p>
+          <p>STP, M3D, STL and other formats</p>
         </FeatureCard>
         <FeatureCard>
           <h3>High Quality</h3>

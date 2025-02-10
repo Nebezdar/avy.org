@@ -123,7 +123,7 @@ const ModelsList = ({ productType, itemType, series, onSelect }) => {
               src={model.thumbnail || '/placeholder.jpg'} 
               alt={model.articleNumber}
               onError={(e) => {
-                e.target.src = '/placeholder.jpg';
+                e.target.src = '/B1SV-.jpg';
               }}
             />
             <ModelInfo>

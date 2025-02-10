@@ -90,7 +90,7 @@ const SeriesList = ({ productType, itemType, onSelect }) => {
             src={item.image || '/placeholder.jpg'} 
             alt={item.name}
             onError={(e) => {
-              e.target.src = '/placeholder.jpg';
+              e.target.src = '/B1SV-.jpg';
             }}
           />
           <SeriesName>{item.name}</SeriesName>

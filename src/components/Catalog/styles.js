@@ -15,39 +15,56 @@ export const Content = styled.div`
   flex: 1;
 `;
 
-export const ItemsWrapper = styled.div`
+export const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  flex: 1;
 `;
 
-export const ItemCard = styled.div`
-  border: 1px solid #eee;
+export const ProductCard = styled.div`
+  background: white;
   border-radius: 8px;
-  padding: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eee;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
+`;
 
-  .image-container {
-    aspect-ratio: 1;
-    background: #f5f5f5;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-  }
+export const ImageContainer = styled.div`
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  background: #f5f5f5;
+`;
+
+export const ProductImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+export const ProductInfo = styled.div`
+  padding: 16px;
+  text-align: center;
+  background: white;
+`;
+
+export const ProductName = styled.h3`
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
 `;
 
 export const TreeItem = styled.div`

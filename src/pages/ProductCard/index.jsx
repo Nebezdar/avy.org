@@ -93,7 +93,7 @@ const ProductCard = () => {
             src={selectedModel.image || '/placeholder.jpg'} 
             alt={selectedModel.name}
             onError={(e) => {
-              e.target.src = '/placeholder.jpg';
+              e.target.src = '/B1SV-.jpg';
             }}
           />
         </ImageContainer>
