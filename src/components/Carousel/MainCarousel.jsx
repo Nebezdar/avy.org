@@ -50,7 +50,7 @@ const mockModels = [
     id: 1,
     name: "Fittings",
     description: "High-pressure tube fitting",
-    thumbnail: "https://fluid-line.ru/assets/templates/2014/images/menu/rezbovie-fitingi.png"
+    thumbnail: "https://english.hy-lok.com/data/PRODUCTS/FITTINGS/Hy-Lok%20Tube%20Fitting.jpg"
   },
   {
     id: 2,
@@ -62,7 +62,7 @@ const mockModels = [
     id: 3,
     name: "Check Valve",
     description: "One-way check valve",
-    thumbnail: "https://via.placeholder.com/400x300?text=Check+Valve"
+    thumbnail: "https://english.hy-lok.com/data/PRODUCTS/VALVES/NEEDLE/SVH%20Series.png"
   }
 ];
 
