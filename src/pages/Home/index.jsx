@@ -5,6 +5,7 @@ import { useState } from 'react';
 import ModelModal from '../../components/ModelModal';
 
 
+
 const HomeContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;

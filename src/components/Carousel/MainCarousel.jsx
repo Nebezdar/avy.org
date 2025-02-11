@@ -50,13 +50,13 @@ const mockModels = [
     id: 1,
     name: "Fittings",
     description: "High-pressure tube fitting",
-    thumbnail: "https://via.placeholder.com/400x300?text=Tube+Fitting"
+    thumbnail: "https://fluid-line.ru/assets/templates/2014/images/menu/rezbovie-fitingi.png"
   },
   {
     id: 2,
     name: "Valves",
     description: "Standard ball valve",
-    thumbnail: "https://via.placeholder.com/400x300?text=Ball+Valve"
+    thumbnail: "https://english.hy-lok.com/data/PRODUCTS/VALVES/NEEDLE/GH%20Series.jpg"
   },
   {
     id: 3,
@@ -96,4 +96,4 @@ const MainCarousel = () => {
   );
 };
 
-export default MainCarousel; 
+export default MainCarousel;
