@@ -89,8 +89,8 @@ const ProductCard = () => {
         </Header>
 
         <ImageContainer>
-          <Image 
-            src={selectedModel.image || '/placeholder.jpg'} 
+          <Image
+            src={selectedModel.image || '/Instrument Thread & Weld Fitting.jpg'}
             alt={selectedModel.name}
             onError={(e) => {
               e.target.src = '/B1SV-.jpg';
@@ -121,4 +121,4 @@ const ProductCard = () => {
   );
 };
 
-export default ProductCard; 
+export default ProductCard;

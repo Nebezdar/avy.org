@@ -86,8 +86,8 @@ const SeriesList = ({ productType, itemType, onSelect }) => {
     <Grid>
       {series.map(item => (
         <SeriesCard key={item._id} onClick={() => onSelect(item)}>
-          <SeriesImage 
-            src={item.image || '/placeholder.jpg'} 
+          <SeriesImage
+            src={item.image || '/Instrument Thread & Weld Fitting.jpg'}
             alt={item.name}
             onError={(e) => {
               e.target.src = '/B1SV-.jpg';
@@ -100,4 +100,4 @@ const SeriesList = ({ productType, itemType, onSelect }) => {
   );
 };
 
-export default SeriesList; 
+export default SeriesList;

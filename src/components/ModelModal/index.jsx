@@ -101,7 +101,7 @@ const ModelModal = ({ model, onClose }) => {
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        
+
         <ModelDetails>
           <ModelPreview>
             <img src={model.thumbnail} alt={model.name} />
@@ -110,7 +110,7 @@ const ModelModal = ({ model, onClose }) => {
           <ModelInfo>
             <h2>{model.name}</h2>
             <p>{model.description}</p>
-            
+
             <div>
               <strong>Category:</strong> {model.category}
             </div>
@@ -124,10 +124,19 @@ const ModelModal = ({ model, onClose }) => {
             <DownloadSection>
               <h3>Download Formats</h3>
               <div style={{ marginTop: '1rem' }}>
-                <FormatButton primary>STEP</FormatButton>
-                <FormatButton>IGES</FormatButton>
+                <FormatButton primary>STP</FormatButton>
+                <FormatButton>IGS</FormatButton>
+                <FormatButton>CDW</FormatButton>
+                <FormatButton>DWG</FormatButton>
+                <FormatButton>DXF</FormatButton>
+                <FormatButton>IPT</FormatButton>
+                <FormatButton>M3D</FormatButton>
+                <FormatButton>PDF</FormatButton>
+                <FormatButton>SAT</FormatButton>
                 <FormatButton>STL</FormatButton>
-                <FormatButton>OBJ</FormatButton>
+                <FormatButton>X_T</FormatButton>
+                <FormatButton>DRAW.DWG</FormatButton>
+
               </div>
             </DownloadSection>
           </ModelInfo>
@@ -137,4 +146,4 @@ const ModelModal = ({ model, onClose }) => {
   );
 };
 
-export default ModelModal; 
+export default ModelModal;

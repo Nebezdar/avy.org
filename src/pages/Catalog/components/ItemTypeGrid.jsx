@@ -70,10 +70,10 @@ const ItemTypeGrid = ({ productType, onSelect }) => {
       try {
         dispatch(setLoading(true));
         console.log('Fetching from:', `${API_URL}/api/models/types/${productType}`);
-        
+
         const response = await fetch(`${API_URL}/api/models/types/${productType}`);
         console.log('Response:', response);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -107,11 +107,11 @@ const ItemTypeGrid = ({ productType, onSelect }) => {
       {itemTypes.map(type => (
         <GridItem key={type._id} onClick={() => onSelect(type.name)}>
           <ImageContainer>
-            <ItemImage 
-              src={type.image || '/placeholder.jpg'} 
+            <ItemImage
+              src={type.image || '/Instrument Thread & Weld Fitting.jpg.jpg'}
               alt={type.name}
               onError={(e) => {
-                e.target.src = '/placeholder.jpg';
+                e.target.src = '/Instrument Thread & Weld Fitting.jpg';
               }}
               onLoad={(e) => {
                 e.target.style.opacity = 1;
@@ -127,4 +127,4 @@ const ItemTypeGrid = ({ productType, onSelect }) => {
   );
 };
 
-export default ItemTypeGrid; 
+export default ItemTypeGrid;

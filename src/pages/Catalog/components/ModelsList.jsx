@@ -119,8 +119,8 @@ const ModelsList = ({ productType, itemType, series, onSelect }) => {
       <Grid>
         {models.map(model => (
           <ModelCard key={model._id} onClick={() => onSelect(model)}>
-            <ModelImage 
-              src={model.thumbnail || '/placeholder.jpg'} 
+            <ModelImage
+              src={model.thumbnail || '/Instrument Thread & Weld Fitting.jpg'}
               alt={model.articleNumber}
               onError={(e) => {
                 e.target.src = '/B1SV-.jpg';
@@ -151,4 +151,4 @@ const ModelsList = ({ productType, itemType, series, onSelect }) => {
   );
 };
 
-export default ModelsList; 
+export default ModelsList;
